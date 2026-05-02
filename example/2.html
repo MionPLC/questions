@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fixed Panel Center</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #222;
+  font-family: Arial, sans-serif;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* WRAPPER FIX 1280x720 */
+.wrapper {
+  width: 1280px;
+  height: 720px;
+}
+
+/* FRAME (ZEBRA WARNING) */
+.frame {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+
+  background: repeating-linear-gradient(
+    45deg,
+    #000 0px,
+    #000 15px,
+    #ffcc00 15px,
+    #ffcc00 30px
+  );
+
+  display: flex;
+}
+
+/* CONTAINER */
+.container {
+  width: 100%;
+  height: 100%;
+  background: #333;
+  border-radius: 12px;
+  display: flex;
+  overflow: hidden;
+  color: white;
+}
+
+/* kiri */
+.left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+/* kanan */
+.right {
+  width: 250px;
+  background: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+/* lamp */
+.lamp-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.lamp {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: limegreen;
+  box-shadow: inset 0 0 10px #000;
+}
+
+.lamp.on {
+  background: #666;
+  box-shadow: 0 0 20px #666, inset 0 0 10px #000;
+}
+
+/* button */
+button {
+  width: 180px;
+  height: 70px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #555;
+}
+
+button:active {
+  background: limegreen;
+}
+
+/* tabel */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+td {
+  border: 1px solid #555;
+  padding: 10px;
+  word-break: break-word;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+  <div class="frame">
+    <div class="container">
+
+      <!-- LEFT -->
+      <div class="left">
+
+        <div class="lamp-area">
+          <div class="lamp" id="lamp"></div>
+          <div>Lampu</div>
+        </div>
+
+        <button id="btn">Tombol</button>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="right">
+        <table>
+          <tr>
+            <td>id</td>
+            <td>value</td>
+          </tr>
+          <tr>
+            <td>Button</td>
+            <td id="valBtn">0</td>
+          </tr>
+          <tr>
+            <td>Lampu</td>
+            <td id="valLamp">0</td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const btn = document.getElementById("btn");
+const lamp = document.getElementById("lamp");
+const valBtn = document.getElementById("valBtn");
+const valLamp = document.getElementById("valLamp");
+
+btn.addEventListener("mousedown", () => {
+  valBtn.textContent = "1";
+  lamp.classList.add("on");
+  valLamp.textContent = "1";
+});
+
+btn.addEventListener("mouseup", () => {
+  valBtn.textContent = "0";
+  lamp.classList.remove("on");
+  valLamp.textContent = "0";
+});
+
+// mobile
+btn.addEventListener("touchstart", () => {
+  valBtn.textContent = "1";
+  lamp.classList.add("on");
+  valLamp.textContent = "1";
+});
+
+btn.addEventListener("touchend", () => {
+  valBtn.textContent = "0";
+  lamp.classList.remove("on");
+  valLamp.textContent = "0";
+});
+</script>
+<script>
+function scalePanel() {
+  const baseW = 1280;
+  const baseH = 720;
+
+  const scaleX = window.innerWidth / baseW;
+  const scaleY = window.innerHeight / baseH;
+
+  const scale = Math.min(scaleX, scaleY);
+
+  document.body.style.transform = `scale(${scale})`;
+}
+
+window.addEventListener("resize", scalePanel);
+window.addEventListener("load", scalePanel);
+</script>
+</body>
+</html>
