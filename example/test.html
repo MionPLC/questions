@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Control Panel</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #222;
+    margin: 0;
+  }
+
+  .frame {
+    padding: 20px;
+    border-radius: 16px;
+    background: repeating-linear-gradient(
+      45deg,
+      #000 0px,
+      #000 15px,
+      #ffcc00 15px,
+      #ffcc00 30px
+    );
+  }
+
+  .container {
+    width: 640px;
+    height: 360px;
+    background: #333;
+    border-radius: 12px;
+    display: flex;
+    color: white;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+  }
+
+  .left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+  }
+
+  /* Lamp area lebih ke tengah & lebih besar */
+  .lamp-area {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .lamp-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lamp {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #666;
+    box-shadow: inset 0 0 8px #000;
+  }
+
+  .lamp.on {
+    background: limegreen;
+    box-shadow: 0 0 15px limegreen, inset 0 0 10px #000;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex: 1;
+  }
+
+  .right {
+    width: 200px;
+    background: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  td {
+    border: 1px solid #555;
+    padding: 6px;
+    word-break: break-word;
+  }
+
+  .control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  button {
+    width: 120px;
+    height: 60px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .label {
+    font-size: 13px;
+    color: #ddd;
+  }
+
+  .momentary { background: #555; }
+  .momentary:active { background: limegreen; }
+
+  .toggle { background: #555; }
+  .toggle.active { background: orange; }
+</style>
+</head>
+<body>
+
+<div class="frame">
+  <div class="container">
+
+    <div class="left">
+
+      <!-- Lamps -->
+      <div class="lamp-area">
+        <div class="lamp-group">
+          <div class="lamp" id="lampMomentary"></div>
+          <div class="label">Momentary</div>
+        </div>
+
+        <div class="lamp-group">
+          <div class="lamp" id="lampToggle"></div>
+          <div class="label">Toggle</div>
+        </div>
+
+        <div class="lamp-group">
+          <div class="lamp" id="lampAny"></div>
+          <div class="label">Any ON</div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="controls">
+        <div class="control">
+          <button class="momentary" id="btnMomentary">Momentary</button>
+          <div class="label">Push Button</div>
+        </div>
+
+        <div class="control">
+          <button class="toggle" id="btnToggle">Toggle OFF</button>
+          <div class="label">Switch</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="right">
+      <table>
+        <tr>
+          <td>Momentary Button</td>
+          <td id="valMomentary">0</td>
+        </tr>
+        <tr>
+          <td>Toggle Switch</td>
+          <td id="valToggle">0</td>
+        </tr>
+        <tr>
+          <td>Lamp Momentary</td>
+          <td id="valLampMomentary">0</td>
+        </tr>
+        <tr>
+          <td>Lamp Toggle</td>
+          <td id="valLampToggle">0</td>
+        </tr>
+        <tr>
+          <td>Lamp Any</td>
+          <td id="valLampAny">0</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById("btnToggle");
+  const valToggle = document.getElementById("valToggle");
+  const lampToggle = document.getElementById("lampToggle");
+  const valLampToggle = document.getElementById("valLampToggle");
+
+  const momentaryBtn = document.getElementById("btnMomentary");
+  const valMomentary = document.getElementById("valMomentary");
+  const lampMomentary = document.getElementById("lampMomentary");
+  const valLampMomentary = document.getElementById("valLampMomentary");
+
+  const lampAny = document.getElementById("lampAny");
+  const valLampAny = document.getElementById("valLampAny");
+
+  function updateAnyLamp() {
+    if (valMomentary.textContent === "1" || valToggle.textContent === "1") {
+      lampAny.classList.add("on");
+      valLampAny.textContent = "1";
+    } else {
+      lampAny.classList.remove("on");
+      valLampAny.textContent = "0";
+    }
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    toggleBtn.classList.toggle("active");
+
+    if (toggleBtn.classList.contains("active")) {
+      toggleBtn.textContent = "Toggle ON";
+      valToggle.textContent = "1";
+      lampToggle.classList.add("on");
+      valLampToggle.textContent = "1";
+    } else {
+      toggleBtn.textContent = "Toggle OFF";
+      valToggle.textContent = "0";
+      lampToggle.classList.remove("on");
+      valLampToggle.textContent = "0";
+    }
+
+    updateAnyLamp();
+  });
+
+  momentaryBtn.addEventListener("mousedown", () => {
+    valMomentary.textContent = "1";
+    lampMomentary.classList.add("on");
+    valLampMomentary.textContent = "1";
+    updateAnyLamp();
+  });
+
+  momentaryBtn.addEventListener("mouseup", () => {
+    valMomentary.textContent = "0";
+    lampMomentary.classList.remove("on");
+    valLampMomentary.textContent = "0";
+    updateAnyLamp();
+  });
+</script>
+
+</body>
+</html>
