@@ -2,36 +2,36 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Responsive Panel</title>
+<title>1</title>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   margin: 0;
   height: 100%;
-  overflow: hidden;
   background: #222;
   font-family: Arial, sans-serif;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* viewport untuk scaling */
-.viewport {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
+/* WRAPPER FIX 1280x720 */
+.wrapper {
+  width: 1280px;
+  height: 720px;
 }
 
-/* wrapper yang di-scale */
-.scale-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform-origin: center;
-}
-
-/* BORDER WARNING */
+/* FRAME (ZEBRA WARNING) */
 .frame {
+  width: 100%;
+  height: 100%;
   padding: 20px;
-  border-radius: 16px;
+
   background: repeating-linear-gradient(
     45deg,
     #000 0px,
@@ -39,12 +39,14 @@ html, body {
     #ffcc00 15px,
     #ffcc00 30px
   );
+
+  display: flex;
 }
 
-/* PANEL UTAMA */
+/* CONTAINER */
 .container {
-  width: 500px;
-  height: 260px;
+  width: 100%;
+  height: 100%;
   background: #333;
   border-radius: 12px;
   display: flex;
@@ -59,17 +61,17 @@ html, body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
+  padding: 20px;
 }
 
-/* kanan (tabel) */
+/* kanan */
 .right {
-  width: 180px;
+  width: 250px;
   background: #222;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 15px;
 }
 
 /* lamp */
@@ -77,12 +79,12 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .lamp {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   background: #666;
   box-shadow: inset 0 0 10px #000;
@@ -90,16 +92,16 @@ html, body {
 
 .lamp.on {
   background: limegreen;
-  box-shadow: 0 0 15px limegreen, inset 0 0 10px #000;
+  box-shadow: 0 0 20px limegreen, inset 0 0 10px #000;
 }
 
 /* button */
 button {
-  width: 140px;
-  height: 60px;
-  font-size: 16px;
+  width: 180px;
+  height: 70px;
+  font-size: 18px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   background: #555;
 }
@@ -112,12 +114,12 @@ button:active {
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 16px;
 }
 
 td {
   border: 1px solid #555;
-  padding: 6px;
+  padding: 10px;
   word-break: break-word;
 }
 </style>
@@ -125,68 +127,41 @@ td {
 
 <body>
 
-<div class="viewport">
-  <div class="scale-wrapper" id="scaleWrapper">
+<div class="wrapper">
+  <div class="frame">
+    <div class="container">
 
-    <div class="frame">
-      <div class="container">
+      <!-- LEFT -->
+      <div class="left">
 
-        <!-- LEFT -->
-        <div class="left">
-
-          <div class="lamp-area">
-            <div class="lamp" id="lamp"></div>
-            <div>Lampu</div>
-          </div>
-
-          <button id="btn">Tombol</button>
-
+        <div class="lamp-area">
+          <div class="lamp" id="lamp"></div>
+          <div>Lampu</div>
         </div>
 
-        <!-- RIGHT -->
-        <div class="right">
-          <table>
-            <tr>
-              <td>Button Value</td>
-              <td id="valBtn">0</td>
-            </tr>
-            <tr>
-              <td>Lamp Value</td>
-              <td id="valLamp">0</td>
-            </tr>
-          </table>
-        </div>
+        <button id="btn">Tombol</button>
 
       </div>
-    </div>
 
+      <!-- RIGHT -->
+      <div class="right">
+        <table>
+          <tr>
+            <td>Button Value</td>
+            <td id="valBtn">0</td>
+          </tr>
+          <tr>
+            <td>Lamp Value</td>
+            <td id="valLamp">0</td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
   </div>
 </div>
 
 <script>
-// ==========================
-// SCALE SYSTEM (RESPONSIVE)
-// ==========================
-function scaleUI() {
-  const baseWidth = 500 + 40;   // container + frame padding
-  const baseHeight = 260 + 40;
-
-  const scaleX = window.innerWidth / baseWidth;
-  const scaleY = window.innerHeight / baseHeight;
-
-  const scale = Math.min(scaleX, scaleY);
-
-  const wrapper = document.getElementById("scaleWrapper");
-
-  wrapper.style.transform = `translate(-50%, -50%) scale(${scale})`;
-}
-
-window.addEventListener("resize", scaleUI);
-window.addEventListener("load", scaleUI);
-
-// ==========================
-// LOGIC BUTTON + LAMP
-// ==========================
 const btn = document.getElementById("btn");
 const lamp = document.getElementById("lamp");
 const valBtn = document.getElementById("valBtn");
@@ -204,7 +179,7 @@ btn.addEventListener("mouseup", () => {
   valLamp.textContent = "0";
 });
 
-// support mobile (touch)
+// mobile
 btn.addEventListener("touchstart", () => {
   valBtn.textContent = "1";
   lamp.classList.add("on");
