@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Simple Panel</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #222;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+  }
+
+  /* Border ala warning */
+  .frame {
+    padding: 20px;
+    border-radius: 16px;
+    background: repeating-linear-gradient(
+      45deg,
+      #000 0px,
+      #000 15px,
+      #ffcc00 15px,
+      #ffcc00 30px
+    );
+  }
+
+  .container {
+    width: 500px;
+    height: 260px;
+    background: #333;
+    border-radius: 12px;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+  }
+
+  .right {
+    width: 180px;
+    background: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .lamp-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lamp {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #666;
+    box-shadow: inset 0 0 10px #000;
+  }
+
+  .lamp.on {
+    background: limegreen;
+    box-shadow: 0 0 15px limegreen, inset 0 0 10px #000;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  button {
+    width: 140px;
+    height: 60px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #555;
+  }
+
+  button:active {
+    background: limegreen;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  td {
+    border: 1px solid #555;
+    padding: 6px;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+
+<div class="frame">
+  <div class="container">
+
+    <div class="left">
+      <div class="lamp-area">
+        <div class="lamp" id="lamp"></div>
+        <div>Lampu</div>
+      </div>
+
+      <div class="controls">
+        <button id="btn">Tombol</button>
+      </div>
+    </div>
+
+    <div class="right">
+      <table>
+        <tr>
+          <td>Button Value</td>
+          <td id="valBtn">0</td>
+        </tr>
+        <tr>
+          <td>Lamp Value</td>
+          <td id="valLamp">0</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const btn = document.getElementById("btn");
+  const lamp = document.getElementById("lamp");
+  const valBtn = document.getElementById("valBtn");
+  const valLamp = document.getElementById("valLamp");
+
+  btn.addEventListener("mousedown", () => {
+    valBtn.textContent = "1";
+    lamp.classList.add("on");
+    valLamp.textContent = "1";
+  });
+
+  btn.addEventListener("mouseup", () => {
+    valBtn.textContent = "0";
+    lamp.classList.remove("on");
+    valLamp.textContent = "0";
+  });
+</script>
+
+</body>
+</html>
