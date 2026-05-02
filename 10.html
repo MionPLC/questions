@@ -231,7 +231,7 @@ pre {
 
     <section id="overview">
         <p>
-        Ada 4 tombol. tombol 1 menyalakan 2 lampu secara bersamaan. tombol 2 digunakan untuk menyalakan lampu 1, setelah 3 detik lampu 2 menyala. tombol 3 ditekan maka lampu akan menyala bergantian(flip-flop) dengan waktu 2 detik dan jika dilepas maka waktu bertambah 4 detik. tombol 4 digunakan untuk mematikan semua lampu, semua tombol tidak bisa bekerja jika ada salah satu lampu yang menyala. masing-masing tombol memiliki 1 lampu.
+        Ada 4 tombol(a,b,c,d). tombol 1 menyalakan 2 lampu secara bersamaan. tombol 2 digunakan untuk menyalakan lampu 1, setelah 3 detik lampu 2 menyala. tombol 3 ditekan maka lampu akan menyala bergantian(flip-flop) dengan waktu 2 detik dan jika dilepas maka waktu bertambah 4 detik. tombol 4 digunakan untuk mematikan semua lampu, semua tombol tidak bisa bekerja jika ada salah satu lampu yang menyala. masing-masing tombol memiliki 1 lampu.
         </p>
     </section>
 
@@ -239,11 +239,11 @@ pre {
         <h2>Pengalamatan</h2>
         <p>Input</p>
         <div class="tag-group">
-            <code>0.00</code><code>0.01</code><code>0.02</code><code>0.03</code>
+            <code>0.00|Tombol a</code><code>0.01|Tombol b</code><code>0.02|Tombol c</code><code>0.03|Tombol d</code>
         </div>
         <p>Output</p>
         <div class="tag-group">
-            <code>100.00</code><code>100.01</code><code>100.03</code><code>100.04</code><code>100.05</code><code>100.06</code>
+            <code>100.00|Lampu a</code><code>100.01|Lampu b</code><code>100.03|Lampu c</code><code>100.04|Lampu d</code><code>100.05|Lampu 1</code><code>100.06|Lampu 2</code>
         </div>
         <p>
         Diatas merupakan alamat yang diperlukan untuk di wiring pada PLC Omron
