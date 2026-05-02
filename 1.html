@@ -196,22 +196,18 @@ pre {
 }
 
 .iframe-container {
-    width: 100%;
-    margin-top: 20px;
-    
-    /* rasio panel (misalnya 500x260 ≈ 1.92) */
-    aspect-ratio: 500 / 260;
-    
-    background: #000;
-    border-radius: 10px;
-    overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  background: none;
 }
 
 .iframe-container iframe {
-    width: 100%;
-    min-width: 200px;
-    height: clamp(200px, 40vw, 400px);
+  width: 100%;
+  height: 100%;
+  border: none;
 }
+
 /* ===== MOBILE ===== */
 @media (max-width: 900px) {
     .sidebar {
