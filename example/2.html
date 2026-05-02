@@ -156,7 +156,7 @@ td {
           </tr>
           <tr>
             <td>Lampu</td>
-            <td id="valLamp">0</td>
+            <td id="valLamp">1</td>
           </tr>
         </table>
       </div>
@@ -174,26 +174,26 @@ const valLamp = document.getElementById("valLamp");
 btn.addEventListener("mousedown", () => {
   valBtn.textContent = "1";
   lamp.classList.add("on");
-  valLamp.textContent = "1";
+  valLamp.textContent = "0";
 });
 
 btn.addEventListener("mouseup", () => {
   valBtn.textContent = "0";
   lamp.classList.remove("on");
-  valLamp.textContent = "0";
+  valLamp.textContent = "1";
 });
 
 // mobile
 btn.addEventListener("touchstart", () => {
   valBtn.textContent = "1";
   lamp.classList.add("on");
-  valLamp.textContent = "1";
+  valLamp.textContent = "0";
 });
 
 btn.addEventListener("touchend", () => {
   valBtn.textContent = "0";
   lamp.classList.remove("on");
-  valLamp.textContent = "0";
+  valLamp.textContent = "1";
 });
 </script>
 <script>
