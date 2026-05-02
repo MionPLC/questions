@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>1</title>
+<title>Fixed Panel Center</title>
 
 <style>
 * {
@@ -192,6 +192,21 @@ btn.addEventListener("touchend", () => {
   valLamp.textContent = "0";
 });
 </script>
+<script>
+function scalePanel() {
+  const baseW = 1280;
+  const baseH = 720;
 
+  const scaleX = window.innerWidth / baseW;
+  const scaleY = window.innerHeight / baseH;
+
+  const scale = Math.min(scaleX, scaleY);
+
+  document.body.style.transform = `scale(${scale})`;
+}
+
+window.addEventListener("resize", scalePanel);
+window.addEventListener("load", scalePanel);
+</script>
 </body>
 </html>
