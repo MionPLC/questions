@@ -137,15 +137,19 @@ td {
       <div class="right">
         <table>
           <tr>
-            <td>START</td>
+            <td>label</td>
+            <td>nilai</td>
+          </tr>
+          <tr>
+            <td>0.00|Tombol Start</td>
             <td id="valStart">0</td>
           </tr>
           <tr>
-            <td>STOP</td>
+            <td>0.01|Tombol Stop</td>
             <td id="valStop">0</td>
           </tr>
           <tr>
-            <td>LAMP</td>
+            <td>100.00|Lampu</td>
             <td id="valLamp">0</td>
           </tr>
         </table>
@@ -185,7 +189,6 @@ function logic() {
   const start = parseInt(valStart.textContent);
   const stop = parseInt(valStop.textContent);
 
-  // 🔥 Edge detection: START dilepas saat STOP masih aktif
   if (prevStart === 1 && start === 0 && stop === 1) {
     lampState = 0;
   }
