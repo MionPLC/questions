@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PLC Multi-Touch Panel FIX</title>
+<title>PLC Table Driven Logic</title>
 
 <style>
 * { box-sizing: border-box; }
@@ -96,12 +95,11 @@ button.active {
   height: 80px;
   border-radius: 50%;
   background: #666;
-  box-shadow: inset 0 0 10px #000;
 }
 
 .lamp.on {
   background: limegreen;
-  box-shadow: 0 0 20px limegreen, inset 0 0 10px #000;
+  box-shadow: 0 0 20px limegreen;
 }
 
 table {
@@ -114,7 +112,6 @@ td {
   padding: 10px;
 }
 </style>
-
 </head>
 
 <body>
@@ -123,112 +120,123 @@ td {
   <div class="frame">
     <div class="container">
 
-```
-  <div class="left">
+      <!-- LEFT -->
+      <div class="left">
 
-    <div class="lamp-area">
-      <div class="lamp" id="lamp"></div>
-      <div>Lampu</div>
+        <div class="lamp-area">
+          <div class="lamp" id="lamp"></div>
+          <div>Lampu</div>
+        </div>
+
+        <div class="button-group">
+          <button id="btnStart">START</button>
+          <button id="btnStop">STOP</button>
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="right">
+        <table>
+          <tr>
+            <td>START</td>
+            <td id="valStart">0</td>
+          </tr>
+          <tr>
+            <td>STOP</td>
+            <td id="valStop">0</td>
+          </tr>
+          <tr>
+            <td>LAMP</td>
+            <td id="valLamp">0</td>
+          </tr>
+        </table>
+      </div>
+
     </div>
-
-    <div class="button-group">
-      <button id="btnOn">START</button>
-      <button id="btnOff">STOP</button>
-    </div>
-
-  </div>
-
-  <div class="right">
-    <table>
-      <tr>
-        <td>Input START</td>
-        <td id="valOn">0</td>
-      </tr>
-      <tr>
-        <td>Input STOP</td>
-        <td id="valOff">0</td>
-      </tr>
-      <tr>
-        <td>Output Lamp</td>
-        <td id="valLamp">0</td>
-      </tr>
-    </table>
-  </div>
-
-</div>
-```
-
   </div>
 </div>
 
 <script>
-const btnOn = document.getElementById("btnOn");
-const btnOff = document.getElementById("btnOff");
-const lamp = document.getElementById("lamp");
+const btnStart = document.getElementById("btnStart");
+const btnStop = document.getElementById("btnStop");
 
-const valOn = document.getElementById("valOn");
-const valOff = document.getElementById("valOff");
+const valStart = document.getElementById("valStart");
+const valStop = document.getElementById("valStop");
 const valLamp = document.getElementById("valLamp");
 
-let start = 0;
-let stop = 0;
-let lampState = 0;
+const lamp = document.getElementById("lamp");
 
-/* LOGIC (FIXED) */
+/* ===== INPUT HANDLER ===== */
+function setStart(v) {
+  valStart.textContent = v;
+  btnStart.classList.toggle("active", v === 1);
+}
+
+function setStop(v) {
+  valStop.textContent = v;
+  btnStop.classList.toggle("active", v === 1);
+}
+
+/* ===== LOGIC (baca dari tabel) ===== */
 function logic() {
-  if (stop === 1) {
-    lampState = 0; // STOP PRIORITAS
-  } else if (start === 1) {
+  const start = parseInt(valStart.textContent);
+  const stop = parseInt(valStop.textContent);
+
+  let lampState = 0;
+
+  if (start === 1) {
     lampState = 1;
+  } else if (stop === 1) {
+    lampState = 0;
   }
 
-  lamp.classList.toggle("on", lampState === 1);
   valLamp.textContent = lampState;
+  lamp.classList.toggle("on", lampState === 1);
 }
+
+/* ===== EVENTS ===== */
 
 /* START */
-function startDown() {
-  start = 1;
-  valOn.textContent = "1";
-  btnOn.classList.add("active");
+btnStart.addEventListener("mousedown", () => {
+  setStart(1);
   logic();
-}
+});
 
-function startUp() {
-  start = 0;
-  valOn.textContent = "0";
-  btnOn.classList.remove("active");
-}
+btnStart.addEventListener("mouseup", () => {
+  setStart(0);
+});
 
 /* STOP */
-function stopDown() {
-  stop = 1;
-  valOff.textContent = "1";
-  btnOff.classList.add("active");
+btnStop.addEventListener("mousedown", () => {
+  setStop(1);
   logic();
-}
+});
 
-function stopUp() {
-  stop = 0;
-  valOff.textContent = "0";
-  btnOff.classList.remove("active");
-}
+btnStop.addEventListener("mouseup", () => {
+  setStop(0);
+});
 
-/* MOUSE */
-btnOn.addEventListener("mousedown", startDown);
-btnOn.addEventListener("mouseup", startUp);
-btnOn.addEventListener("mouseleave", startUp);
+/* TOUCH SUPPORT */
+btnStart.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  setStart(1);
+  logic();
+});
 
-btnOff.addEventListener("mousedown", stopDown);
-btnOff.addEventListener("mouseup", stopUp);
-btnOff.addEventListener("mouseleave", stopUp);
+btnStart.addEventListener("touchend", () => {
+  setStart(0);
+});
 
-/* TOUCH */
-btnOn.addEventListener("touchstart", (e) => { e.preventDefault(); startDown(); });
-btnOn.addEventListener("touchend", startUp);
+btnStop.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  setStop(1);
+  logic();
+});
 
-btnOff.addEventListener("touchstart", (e) => { e.preventDefault(); stopDown(); });
-btnOff.addEventListener("touchend", stopUp);
+btnStop.addEventListener("touchend", () => {
+  setStop(0);
+});
 </script>
 
 <script>
@@ -236,10 +244,10 @@ function scalePanel() {
   const baseW = 1280;
   const baseH = 720;
 
-  const scaleX = window.innerWidth / baseW;
-  const scaleY = window.innerHeight / baseH;
-
-  const scale = Math.min(scaleX, scaleY);
+  const scale = Math.min(
+    window.innerWidth / baseW,
+    window.innerHeight / baseH
+  );
 
   document.body.style.transform = `scale(${scale})`;
 }
