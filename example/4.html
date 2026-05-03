@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>4</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #222;
+  font-family: Arial, sans-serif;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* WRAPPER FIX 1280x720 */
+.wrapper {
+  width: 1280px;
+  height: 720px;
+}
+
+/* FRAME */
+.frame {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+
+  background: repeating-linear-gradient(
+    45deg,
+    #000 0px,
+    #000 15px,
+    #ffcc00 15px,
+    #ffcc00 30px
+  );
+
+  display: flex;
+}
+
+/* CONTAINER */
+.container {
+  width: 100%;
+  height: 100%;
+  background: #333;
+  border-radius: 12px;
+  display: flex;
+  overflow: hidden;
+  color: white;
+}
+
+/* LEFT (diubah jadi row) */
+.left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px; /* jarak lampu & tombol */
+}
+
+/* kanan */
+.right {
+  width: 250px;
+  background: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+/* lamp area */
+.lamp-area {
+  display: flex;
+  gap: 40px;
+}
+
+/* group lamp */
+.lamp-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* lamp */
+.lamp {
+  width: 200px;   /* sesuai request */
+  height: 200px;
+  border-radius: 50%;
+  background: #666;
+  box-shadow: inset 0 0 10px #000;
+}
+
+.lamp.on {
+  background: limegreen;
+  box-shadow: 0 0 25px limegreen, inset 0 0 10px #000;
+}
+
+/* button */
+button {
+  width: 180px;
+  height: 70px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #555;
+}
+
+button:active {
+  background: limegreen;
+}
+
+/* tabel */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  color: white;
+}
+
+td {
+  border: 1px solid #555;
+  padding: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+  <div class="frame">
+    <div class="container">
+
+      <!-- LEFT -->
+      <div class="left">
+
+        <div class="lamp-area">
+          <div class="lamp-group">
+            <div class="lamp" id="lamp1"></div>
+            <div>Lampu 1</div>
+          </div>
+
+          <div class="lamp-group">
+            <div class="lamp" id="lamp2"></div>
+            <div>Lampu 2</div>
+          </div>
+        </div>
+
+        <button id="btn">Tombol</button>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="right">
+        <table>
+          <tr>
+            <td>label</td>
+            <td>nilai</td>
+          </tr>
+          <tr>
+            <td>0.00|Tombol</td>
+            <td id="valBtn">0</td>
+          </tr>
+          <tr>
+            <td>100.00|Lampu 1</td>
+            <td id="valLamp1">0</td>
+          </tr>
+          <tr>
+            <td>100.01|Lampu 2</td>
+            <td id="valLamp2">0</td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const btn = document.getElementById("btn");
+
+const lamp1 = document.getElementById("lamp1");
+const lamp2 = document.getElementById("lamp2");
+
+const valBtn = document.getElementById("valBtn");
+const valLamp1 = document.getElementById("valLamp1");
+const valLamp2 = document.getElementById("valLamp2");
+
+function turnOn() {
+  valBtn.textContent = "1";
+
+  lamp1.classList.add("on");
+  lamp2.classList.add("on");
+
+  valLamp1.textContent = "1";
+  valLamp2.textContent = "1";
+}
+
+function turnOff() {
+  valBtn.textContent = "0";
+
+  lamp1.classList.remove("on");
+  lamp2.classList.remove("on");
+
+  valLamp1.textContent = "0";
+  valLamp2.textContent = "0";
+}
+
+// Desktop
+btn.addEventListener("mousedown", turnOn);
+btn.addEventListener("mouseup", turnOff);
+
+// Mobile
+btn.addEventListener("touchstart", turnOn);
+btn.addEventListener("touchend", turnOff);
+
+// scaling
+function scalePanel() {
+  const baseW = 1280;
+  const baseH = 720;
+
+  const scale = Math.min(
+    window.innerWidth / baseW,
+    window.innerHeight / baseH
+  );
+
+  document.body.style.transform = `scale(${scale})`;
+}
+
+window.addEventListener("resize", scalePanel);
+window.addEventListener("load", scalePanel);
+</script>
+
+</body>
+</html>
