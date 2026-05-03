@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PLC Multi-Touch Panel</title>
+<title>PLC Multi-Touch Panel FIX</title>
 
 <style>
 * { box-sizing: border-box; }
@@ -46,7 +47,6 @@ html, body {
   color: white;
 }
 
-/* LEFT */
 .left {
   flex: 1;
   display: flex;
@@ -56,13 +56,11 @@ html, body {
   padding: 20px;
 }
 
-/* BUTTON GROUP */
 .button-group {
   display: flex;
   gap: 20px;
 }
 
-/* BUTTON */
 button {
   width: 180px;
   height: 70px;
@@ -73,12 +71,10 @@ button {
   background: #555;
 }
 
-/* ACTIVE STATE */
 button.active {
   background: limegreen;
 }
 
-/* RIGHT */
 .right {
   width: 300px;
   background: #222;
@@ -88,7 +84,6 @@ button.active {
   padding: 15px;
 }
 
-/* LAMP */
 .lamp-area {
   display: flex;
   flex-direction: column;
@@ -109,11 +104,9 @@ button.active {
   box-shadow: 0 0 20px limegreen, inset 0 0 10px #000;
 }
 
-/* TABLE */
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 16px;
 }
 
 td {
@@ -121,6 +114,7 @@ td {
   padding: 10px;
 }
 </style>
+
 </head>
 
 <body>
@@ -129,40 +123,41 @@ td {
   <div class="frame">
     <div class="container">
 
-      <!-- LEFT -->
-      <div class="left">
+```
+  <div class="left">
 
-        <div class="lamp-area">
-          <div class="lamp" id="lamp"></div>
-          <div>Lampu</div>
-        </div>
-
-        <div class="button-group">
-          <button id="btnOn">START</button>
-          <button id="btnOff">STOP</button>
-        </div>
-
-      </div>
-
-      <!-- RIGHT -->
-      <div class="right">
-        <table>
-          <tr>
-            <td>Input START</td>
-            <td id="valOn">0</td>
-          </tr>
-          <tr>
-            <td>Input STOP</td>
-            <td id="valOff">0</td>
-          </tr>
-          <tr>
-            <td>Output Lamp</td>
-            <td id="valLamp">0</td>
-          </tr>
-        </table>
-      </div>
-
+    <div class="lamp-area">
+      <div class="lamp" id="lamp"></div>
+      <div>Lampu</div>
     </div>
+
+    <div class="button-group">
+      <button id="btnOn">START</button>
+      <button id="btnOff">STOP</button>
+    </div>
+
+  </div>
+
+  <div class="right">
+    <table>
+      <tr>
+        <td>Input START</td>
+        <td id="valOn">0</td>
+      </tr>
+      <tr>
+        <td>Input STOP</td>
+        <td id="valOff">0</td>
+      </tr>
+      <tr>
+        <td>Output Lamp</td>
+        <td id="valLamp">0</td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+```
+
   </div>
 </div>
 
@@ -179,12 +174,12 @@ let start = 0;
 let stop = 0;
 let lampState = 0;
 
-/* LOGIC */
+/* LOGIC (FIXED) */
 function logic() {
-  if (start === 1) {
-    lampState = 1; // PRIORITAS START
-  } else if (stop === 1) {
-    lampState = 0;
+  if (stop === 1) {
+    lampState = 0; // STOP PRIORITAS
+  } else if (start === 1) {
+    lampState = 1;
   }
 
   lamp.classList.toggle("on", lampState === 1);
@@ -219,7 +214,7 @@ function stopUp() {
   btnOff.classList.remove("active");
 }
 
-/* MOUSE EVENTS */
+/* MOUSE */
 btnOn.addEventListener("mousedown", startDown);
 btnOn.addEventListener("mouseup", startUp);
 btnOn.addEventListener("mouseleave", startUp);
@@ -228,7 +223,7 @@ btnOff.addEventListener("mousedown", stopDown);
 btnOff.addEventListener("mouseup", stopUp);
 btnOff.addEventListener("mouseleave", stopUp);
 
-/* TOUCH EVENTS (multi-touch support) */
+/* TOUCH */
 btnOn.addEventListener("touchstart", (e) => { e.preventDefault(); startDown(); });
 btnOn.addEventListener("touchend", startUp);
 
