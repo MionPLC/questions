@@ -195,6 +195,19 @@ pre {
     width: 100%;
 }
 
+.iframe-container {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  background: none;
+}
+
+.iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
 /* ===== MOBILE ===== */
 @media (max-width: 900px) {
     .sidebar {
@@ -219,19 +232,20 @@ pre {
     <h3>Question - MionPLC</h3>
     <a href="#overview">Ringkasan</a>
     <a href="#addressing">Pengalamatan</a>
+    <a href="#simulasi">Simulasi</a>
 </div>
 
 <!-- ===== CONTENT ===== -->
 <div class="content">
     <div class="breadcrumb">
-        <a href="htpps://mionplc.github.io/" style="color: #888;">MionPLC</a> / Questions / 3
+        <a href="https://mionplc.github.io/" style="color: #888;">MionPLC</a> / Questions / 3
     </div>
 
     <h1>Question - 3</h1>
 
     <section id="overview">
         <p>
-        Sebuah lampu dapat dikendalikan dengan 2 tombol, tombol 1 ditekan maka lampu dapat menyala dan jika tombol 2 ditekan lampu mati dan jika kedua tombol ditekan maka akan menyala.
+        Sebuah lampu dapat dikendalikan dengan 2 tombol, tombol start ditekan maka lampu dapat menyala dan jika tombol 2 ditekan lampu mati dan jika kedua tombol ditekan maka lampu tetap akan menyala.
         </p>
     </section>
 
@@ -239,15 +253,21 @@ pre {
         <h2>Pengalamatan</h2>
         <p>Input</p>
         <div class="tag-group">
-            <code>0.00</code><code>0.01</code>
+            <code>0.00|Tombol Stop</code><code>0.00|Tombol Stop</code>
         </div>
         <p>Output</p>
         <div class="tag-group">
-            <code>100.00</code>
+            <code>100.00|Lampu</code>
         </div>
         <p>
         Diatas merupakan alamat yang diperlukan untuk di wiring pada PLC Omron
         </p>
+    </section>
+    <section id="simulasi">
+        <h2>Simulasi</h2>
+        <div class="iframe-container">
+            <iframe src="/questions/example/3.html"></iframe>
+        </div>
     </section>
     <section>
         <div class="nav-bottom">
