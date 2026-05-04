@@ -1,8 +1,287 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta http-equiv="refresh" content="0; url=1.html">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Question - MionPLC</title>
+<link rel="icon" href="https://mionplc.github.io/assets/icon.webp">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    background: #f5f7fa;
+    color: #333;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 250px;
+    background: #fff;
+    border-right: 1px solid #ddd;
+    height: 100vh;
+    position: fixed;
+    padding: 20px;
+}
+
+.sidebar a {
+    display: block;
+    text-decoration: none;
+    color: #444;
+    padding: 6px 0;
+}
+
+.sidebar a.active {
+    color: #1a73e8;
+    font-weight: bold;
+}
+
+/* CONTENT */
+.content {
+    margin-left: 270px;
+    padding: 40px;
+    width: 100%;
+}
+
+.nav-bottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.nav-bottom a {
+    text-decoration: none;
+    color: white;
+    background: #334155;
+    padding: 10px 16px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.nav-bottom a:hover {
+    transform: scale(1.05);
+}
+
+.home-btn {
+    background: #0ea5e9;
+}
+
+/* DISABLED BUTTON */
+.nav-bottom a.disabled {
+    background: #94a3b8;
+    pointer-events: none;
+    transform: none;
+    cursor: not-allowed;
+}
+
+/* TAG */
+.tag-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag-group code {
+    background: #eee;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+/* IFRAME */
+.iframe-container {
+    width: 100%;
+    max-width: 1280px;
+    aspect-ratio: 16/9;
+    position: relative;
+}
+
+.iframe-container iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1280px;
+    height: 720px;
+    border: none;
+    transform: translate(-50%, -50%) scale(0.7);
+}
+
+/* MOBILE */
+@media(max-width:900px){
+    .sidebar{ display:none; }
+    .content{ margin-left:0; padding:20px;}
+}
+</style>
 </head>
+
 <body>
+
+<div class="sidebar">
+    <h3>Question</h3>
+    <a href="#overview">Ringkasan</a>
+    <a href="#addressing">Pengalamatan</a>
+    <a href="#simulasi">Simulasi</a>
+</div>
+
+<div class="content">
+
+    <h1 id="title">Loading...</h1>
+
+    <section id="overview">
+        <p id="overview-text"></p>
+    </section>
+
+    <section id="addressing">
+        <h2>Pengalamatan</h2>
+
+        <p>Input</p>
+        <div class="tag-group" id="input-list"></div>
+
+        <p>Output</p>
+        <div class="tag-group" id="output-list"></div>
+    </section>
+
+    <section id="simulasi">
+        <h2>Simulasi</h2>
+        <div class="iframe-container">
+            <iframe id="sim-frame"></iframe>
+        </div>
+    </section>
+
+    <div class="nav-bottom">
+        <a id="prev-btn">←</a>
+        <a href="https://mionplc.github.io" class="home-btn">Home</a>
+        <a id="next-btn">→</a>
+    </div>
+
+</div>
+
+<script>
+// ===== STATE =====
+let allQuestions = {};
+let currentIndex = 0;
+let keys = [];
+
+// ===== GET HASH =====
+function getQuestionId() {
+    return location.hash.replace("#","") || "question1";
+}
+
+// ===== RENDER =====
+function renderQuestion(id) {
+    const data = allQuestions[id];
+    if (!data) return;
+
+    currentIndex = keys.indexOf(id);
+
+    document.getElementById("title").innerText = data.title;
+    document.getElementById("overview-text").innerText = data.overview;
+
+    // input
+    const inputList = document.getElementById("input-list");
+    inputList.innerHTML = "";
+    data.input.forEach(i=>{
+        inputList.innerHTML += `<code>${i.address} | ${i.label}</code>`;
+    });
+
+    // output
+    const outputList = document.getElementById("output-list");
+    outputList.innerHTML = "";
+    data.output.forEach(o=>{
+        outputList.innerHTML += `<code>${o.address} | ${o.label}</code>`;
+    });
+
+    // iframe
+    document.getElementById("sim-frame").src = data.iframe;
+
+    updateNav();
+
+    // scroll smooth ke atas
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ===== NAVIGATION =====
+function updateNav(){
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+
+    const prev = keys[currentIndex - 1];
+    const next = keys[currentIndex + 1];
+
+    // prev
+    if(prev){
+        prevBtn.classList.remove("disabled");
+    }else{
+        prevBtn.classList.add("disabled");
+    }
+
+    // next
+    if(next){
+        nextBtn.classList.remove("disabled");
+    }else{
+        nextBtn.classList.add("disabled");
+    }
+}
+
+// klik tombol (SPA)
+document.getElementById("prev-btn").onclick = () => {
+    if(currentIndex > 0){
+        location.hash = keys[currentIndex - 1];
+    }
+};
+
+document.getElementById("next-btn").onclick = () => {
+    if(currentIndex < keys.length - 1){
+        location.hash = keys[currentIndex + 1];
+    }
+};
+
+// ===== LOAD JSON =====
+async function init(){
+    const res = await fetch("questions.json");
+    allQuestions = await res.json();
+    keys = Object.keys(allQuestions);
+
+    renderQuestion(getQuestionId());
+}
+
+// ===== HASH CHANGE (SPA CORE) =====
+window.addEventListener("hashchange", ()=>{
+    renderQuestion(getQuestionId());
+});
+
+// ===== IFRAME SCALE =====
+function scaleIframe(){
+    const iframe = document.getElementById("sim-frame");
+    const container = document.querySelector(".iframe-container");
+
+    const scale = Math.min(
+        container.clientWidth / 1280,
+        container.clientHeight / 720
+    );
+
+    iframe.style.transform = `translate(-50%, -50%) scale(${scale})`;
+}
+
+window.addEventListener("resize", scaleIframe);
+window.addEventListener("load", ()=>{
+    init();
+    scaleIframe();
+});
+
+// ===== SIDEBAR SMOOTH SCROLL =====
+document.querySelectorAll(".sidebar a").forEach(link=>{
+    link.addEventListener("click", e=>{
+        const target = document.querySelector(link.getAttribute("href"));
+        if(target){
+            e.preventDefault();
+            target.scrollIntoView({ behavior:"smooth" });
+        }
+    });
+});
+</script>
+
 </body>
 </html>
