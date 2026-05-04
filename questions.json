@@ -32,5 +32,5 @@
       { "address": "100.00", "label": "Lampu" }
     ],
     "iframe": "./example/3.html"
-  },
+  }
 }
