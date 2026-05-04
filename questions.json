@@ -32,5 +32,93 @@
       { "address": "100.00", "label": "Lampu" }
     ],
     "iframe": "./example/3.html"
+  },
+  "question4": {
+    "title": "Question - 4",
+    "overview": "Dua buah lampu dapat dinyalakan dengan sebuah tombol, jika tombol ditekan maka menyala dan jika tombol dilepas maka mati.",
+    "input": [
+      { "address": "0.00", "label": "Tombol" }
+    ],
+    "output": [
+      { "address": "100.00", "label": "Lampu" },
+      { "address": "100.01", "label": "Lampu" }
+    ],
+    "iframe": "./example/4.html"
+  },
+  "question5": {
+    "title": "Question - 5",
+    "overview": "Didalam rumah ada 3 ruangan masing-masing ruangan memiliki 1 buah lampu dan 2 buah tombol, 1 tombol digunakan untuk menyalakan lampu dan tombol lainnya untuk mematikan, jika kedua tombol ditekan maka lampu mati.",
+    "input": [
+      { "address": "0.00", "label": "Tombol Ruang 1" },
+      { "address": "0.01", "label": "Tombol Ruang 1" },
+      { "address": "0.02", "label": "Tombol Ruang 2" },
+      { "address": "0.03", "label": "Tombol Ruang 2" },
+      { "address": "0.04", "label": "Tombol Ruang 3" },
+      { "address": "0.05", "label": "Tombol Ruang 3" }
+    ],
+    "output": [
+      { "address": "100.00", "label": "Lampu Ruang 1" },
+      { "address": "100.01", "label": "Lampu Ruang 2" },
+      { "address": "100.02", "label": "Lampu Ruang 3" }
+    ],
+    "iframe": "./example/5.html"
+  },
+  "question6": {
+    "title": "Question - 6",
+    "overview": "Pada game quiz ada 3 tim masing-masing tim memiliki 1 tombol dan 1 lampu, tim yang menekan tombol terdahulu maka lampu pada tim tersebut menyala dan sirine kan berbunyi. Untuk bisa dijalankan lagi dengan menekan tombol reset.",
+    "input": [
+      { "address": "0.00", "label": "Tombol Reset" },
+      { "address": "0.01", "label": "Tombol Tim 1" },
+      { "address": "0.02", "label": "Tombol Tim 2" },
+      { "address": "0.03", "label": "Tombol Tim 3" }
+    ],
+    "output": [
+      { "address": "100.00", "label": "Lampu Tim 1" },
+      { "address": "100.01", "label": "Lampu Tim 2" },
+      { "address": "100.02", "label": "Lampu Tim 3" },
+      { "address": "100.03", "label": "Sirine" }
+    ],
+    "iframe": "./example/6.html"
+  },
+  "question7": {
+    "title": "Question - 7",
+    "overview": "Sebuah lampu akan menyala selama 6 detik setelah tombol 1 ditekan, jika tombol dilepas maka lampu mati.",
+    "input": [
+      { "address": "0.00", "label": "Tombol" }
+    ],
+    "output": [
+      { "address": "100.00", "label": "Lampu" }
+    ],
+    "iframe": "./example/7.html"
+  },
+  "question8": {
+    "title": "Question - 8",
+    "overview": "Lima buah lampu akan menyala berurutan dengan waktu 7 detik, lampu bergantian menyala tidak boleh menyala bersamaan. Kondisi awal lampu pertama menyala.",
+    "input": [
+      { "address": "-", "label": "-" }
+    ],
+    "output": [
+      { "address": "100.00", "label": "Lampu 1" },
+      { "address": "100.01", "label": "Lampu 2" },
+      { "address": "100.02", "label": "Lampu 3" },
+      { "address": "100.03", "label": "Lampu 4" },
+      { "address": "100.04", "label": "Lampu 5" }
+    ],
+    "iframe": "./example/8.html"
+  },
+  "question9": {
+    "title": "Question - 9",
+    "overview": "Tiga buah lampu akan menyala bersamaan setelah tombol 1 ditekan dan dilepas, Jika tombol 2 ditekan maka semua lampu akan mati setelah 5 detik.",
+    "input": [
+      { "address": "0.00", "label": "Tombol 1" },
+      { "address": "0.01", "label": "Tombol 2" }
+    ],
+    "output": [
+      { "address": "100.00", "label": "Lampu 1" },
+      { "address": "100.00", "label": "Lampu 2" },
+      { "address": "100.00", "label": "Lampu 3" }
+
+    ],
+    "iframe": "./example/9.html"
   }
 }
