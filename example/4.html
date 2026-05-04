@@ -1,36 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>4</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
 
 html, body {
   margin: 0;
-  height: 100%;
-  background: #222;
-  font-family: Arial, sans-serif;
+  height: 720px;
+  width: 1280px;
 
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-/* WRAPPER FIX 1280x720 */
-.wrapper {
-  width: 1280px;
-  height: 720px;
-}
-
-/* FRAME */
-.frame {
-  width: 100%;
-  height: 100%;
-  padding: 20px;
 
   background: repeating-linear-gradient(
     45deg,
@@ -39,202 +23,279 @@ html, body {
     #ffcc00 15px,
     #ffcc00 30px
   );
-
-  display: flex;
 }
 
-/* CONTAINER */
-.container {
-  width: 100%;
-  height: 100%;
-  background: #333;
-  border-radius: 12px;
-  display: flex;
-  overflow: hidden;
-  color: white;
-}
-
-/* LEFT (diubah jadi row) */
-.left {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 80px; /* jarak lampu & tombol */
-}
-
-/* kanan */
-.right {
-  width: 250px;
+/* canvas */
+.canvas {
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
   background: #222;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
 }
 
-/* lamp area */
-.lamp-area {
+/* canvas kiri */
+.left {
+  width: 70%;
+  background: #444;
   display: flex;
-  gap: 40px;
+  align-items: center;
+  flex-direction: column;
 }
 
-/* group lamp */
-.lamp-group {
+.left .lampArea {
+  margin-top: 80px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.lampArea1, .lampArea2 {
+  width: 50%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 12px;
 }
 
-/* lamp */
-.lamp {
-  width: 200px;   /* sesuai request */
+.lamp1 {
+  width: 200px;
   height: 200px;
-  border-radius: 50%;
+  border-radius: 100%;
   background: #666;
-  box-shadow: inset 0 0 10px #000;
+  box-shadow: 0px 0px 10px gray;
 }
 
-.lamp.on {
-  background: limegreen;
-  box-shadow: 0 0 25px limegreen, inset 0 0 10px #000;
+.lamp2 {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  background: #666;
+  box-shadow: 0px 0px 10px gray;
 }
 
-/* button */
-button {
-  width: 180px;
-  height: 70px;
-  font-size: 18px;
-  border: none;
-  border-radius: 12px;
+.left .button {
+  margin-top: 150px;
+  width: 300px;
+  height: 90px;
+  border-radius: 20px;
+  background: #666;
+  box-shadow: 0px 10px 10px gray;
   cursor: pointer;
-  background: #555;
+  transition: all 0.1s ease;
 }
 
-button:active {
-  background: limegreen;
+.left p {
+  font-size: 25px;
+  color: whitesmoke;
+  opacity: 60%;
+  text-shadow: 0px 0px 10px gray;
 }
 
-/* tabel */
-table {
+/* canvas kanan */
+.right {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+/* tabel konfig */
+.panel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+}
+
+/* scroll */
+.table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* scrollbar */
+.table-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: whitesmoke;
+  border-radius: 10px;
+}
+
+/* desain tabel */
+.tabel {
   width: 100%;
   border-collapse: collapse;
   font-size: 16px;
-  color: white;
+  color: whitesmoke;
+  table-layout: fixed;
 }
 
-td {
-  border: 1px solid #555;
-  padding: 10px;
+.tabel td {
+  border: 2px solid whitesmoke;
+  padding: 6px;
+}
+
+/* judul */
+.judul {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* header */
+.tabel tr:first-child td {
+  position: sticky;
+  top: 0;
+  background: #222;
+  z-index: 2;
+}
+
+/* tabel kiri */
+.left-text {
+  text-align: left;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* tabel kanan */
+.center-text {
+  text-align: center;
+}
+
+/* warna */
+.tabel tr:nth-child(even):not(:first-child) {
+  background: #333;
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
-  <div class="frame">
-    <div class="container">
+<div class="canvas">
+  
+  <div class="left">
+    <div class="lampArea">
+      <div class="lampArea1">
+        <div class="lamp1"></div>
+        <p>Lampu</p>
+      </div>
+      <div class="lampArea2">
+        <div class="lamp2"></div>
+        <p>Lampu</p>
+      </div>
+    </div>
+    <div class="button"></div>
+    <p>Tombol</p>
+  </div>
 
-      <!-- LEFT -->
-      <div class="left">
+  <div class="right">
+    <div class="panel">
 
-        <div class="lamp-area">
-          <div class="lamp-group">
-            <div class="lamp" id="lamp1"></div>
-            <div>Lampu 1</div>
-          </div>
+      <!-- input -->
+      <div class="table-wrapper">
+        <table class="tabel">
+          <tr>
+            <td colspan="2" class="judul">INPUT</td>
+          </tr>
 
-          <div class="lamp-group">
-            <div class="lamp" id="lamp2"></div>
-            <div>Lampu 2</div>
-          </div>
-        </div>
-
-        <button id="btn">Tombol</button>
-
+          <tr><td class="left-text">Tombol</td><td id="tombolTabel" class="center-text">0</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+        </table>
       </div>
 
-      <!-- RIGHT -->
-      <div class="right">
-        <table>
+      <!-- output -->
+      <div class="table-wrapper">
+        <table class="tabel">
           <tr>
-            <td>label</td>
-            <td>nilai</td>
+            <td colspan="2" class="judul">OUTPUT</td>
           </tr>
-          <tr>
-            <td>0.00|Tombol</td>
-            <td id="valBtn">0</td>
-          </tr>
-          <tr>
-            <td>100.00|Lampu 1</td>
-            <td id="valLamp1">0</td>
-          </tr>
-          <tr>
-            <td>100.01|Lampu 2</td>
-            <td id="valLamp2">0</td>
-          </tr>
+
+          <tr><td class="left-text">Lampu</td><td id="lampu1Tabel" class="center-text">0</td></tr>
+          <tr><td class="left-text">Lampu</td><td id="lampu2Tabel" class="center-text">0</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
         </table>
       </div>
 
     </div>
   </div>
+
 </div>
 
 <script>
-const btn = document.getElementById("btn");
+  const button = document.querySelector('.button');
+  const tombolTabel = document.getElementById('tombolTabel');
+  const lamp1 = document.querySelector('.lamp1');
+  const lamp2 = document.querySelector('.lamp2');
+  const lampu1Tabel = document.getElementById('lampu1Tabel');
+  const lampu2Tabel = document.getElementById('lampu2Tabel');
 
-const lamp1 = document.getElementById("lamp1");
-const lamp2 = document.getElementById("lamp2");
+  function updateValue() {
+    // tombol
+    if (tombolTabel.textContent.trim() === "1") {
+      button.style.background = "limegreen";
+      button.style.boxShadow = "0px 0px 10px limegreen";
+    } else {
+      button.style.background = "#666";
+      button.style.boxShadow = "0px 10px 10px #333";
+    }
 
-const valBtn = document.getElementById("valBtn");
-const valLamp1 = document.getElementById("valLamp1");
-const valLamp2 = document.getElementById("valLamp2");
+    // lampu mengikuti tombol (logic sederhana)
+    if (tombolTabel.textContent.trim() === "1") {
+      lampu1Tabel.textContent = "1";
+      lampu2Tabel.textContent = "1";
+      lamp1.style.background = "limegreen";
+      lamp1.style.boxShadow = "0px 0px 10px limegreen";
+      lamp2.style.background = "limegreen";
+      lamp2.style.boxShadow = "0px 0px 10px limegreen";
+    } else {
+      lampu1Tabel.textContent = "0";
+      lampu2Tabel.textContent = "0";
+      lamp1.style.background = "#666";
+      lamp1.style.boxShadow = "0px 0px 10px #333";
+      lamp2.style.background = "#666";
+      lamp2.style.boxShadow = "0px 0px 10px #333";
+    }
+  }
 
-function turnOn() {
-  valBtn.textContent = "1";
+  // saat ditekan
+  button.addEventListener('pointerdown', () => {
+    tombolTabel.textContent = "1";
+    updateValue();
+  });
 
-  lamp1.classList.add("on");
-  lamp2.classList.add("on");
+  // saat dilepas
+  button.addEventListener('pointerup', () => {
+    tombolTabel.textContent = "0";
+    updateValue();
+  });
 
-  valLamp1.textContent = "1";
-  valLamp2.textContent = "1";
-}
+  // antisipasi kalau lepas di luar tombol
+  document.addEventListener('pointerup', () => {
+    tombolTabel.textContent = "0";
+    updateValue();
+  });
 
-function turnOff() {
-  valBtn.textContent = "0";
-
-  lamp1.classList.remove("on");
-  lamp2.classList.remove("on");
-
-  valLamp1.textContent = "0";
-  valLamp2.textContent = "0";
-}
-
-// Desktop
-btn.addEventListener("mousedown", turnOn);
-btn.addEventListener("mouseup", turnOff);
-
-// Mobile
-btn.addEventListener("touchstart", turnOn);
-btn.addEventListener("touchend", turnOff);
-
-// scaling
-function scalePanel() {
-  const baseW = 1280;
-  const baseH = 720;
-
-  const scale = Math.min(
-    window.innerWidth / baseW,
-    window.innerHeight / baseH
-  );
-
-  document.body.style.transform = `scale(${scale})`;
-}
-
-window.addEventListener("resize", scalePanel);
-window.addEventListener("load", scalePanel);
+  updateValue();
 </script>
 
 </body>
