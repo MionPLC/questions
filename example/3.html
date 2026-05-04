@@ -1,31 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>PLC Edge Logic</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page</title>
 
 <style>
-* { box-sizing: border-box; }
 
 html, body {
   margin: 0;
-  height: 100%;
-  background: #222;
-  font-family: Arial, sans-serif;
+  height: 720px;
+  width: 1280px;
+
   display: flex;
   justify-content: center;
   align-items: center;
-}
 
-.wrapper {
-  width: 1280px;
-  height: 720px;
-}
-
-.frame {
-  width: 100%;
-  height: 100%;
-  padding: 20px;
   background: repeating-linear-gradient(
     45deg,
     #000 0px,
@@ -33,234 +23,299 @@ html, body {
     #ffcc00 15px,
     #ffcc00 30px
   );
-  display: flex;
 }
 
-.container {
-  width: 100%;
-  height: 100%;
-  background: #333;
-  border-radius: 12px;
-  display: flex;
-  overflow: hidden;
-  color: white;
-}
-
-.left {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-}
-
-.button-group {
-  display: flex;
-  gap: 20px;
-}
-
-button {
-  width: 180px;
-  height: 70px;
-  font-size: 18px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  background: #555;
-}
-
-button.active {
-  background: limegreen;
-}
-
-.right {
-  width: 300px;
+/* canvas */
+.canvas {
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
   background: #222;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
 }
 
-.lamp-area {
+/* canvas kiri */
+.left {
+  width: 70%;
+  background: #444;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.left .lamp {
+  margin-top: 80px;
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  background: #666;
+  box-shadow: 0px 0px 10px gray;
+}
+
+.left .buttonArea {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%-280px;
+}
+
+.buttonArea1, .buttonArea2 {
+  width: 50%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
 }
 
-.lamp {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+.button1, .button2 {
+  margin-top: 150px;
+  width: 270px;
+  height: 90px;
+  border-radius: 20px;
   background: #666;
+  box-shadow: 0px 10px 10px gray;
+  cursor: pointer;
+  transition: all 0.1s ease;
 }
 
-.lamp.on {
-  background: limegreen;
-  box-shadow: 0 0 20px limegreen;
+.left p {
+  font-size: 25px;
+  color: whitesmoke;
+  opacity: 60%;
+  text-shadow: 0px 0px 10px gray;
 }
 
-table {
+/* canvas kanan */
+.right {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+/* tabel konfig */
+.panel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+}
+
+/* scroll */
+.table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* scrollbar */
+.table-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: whitesmoke;
+  border-radius: 10px;
+}
+
+/* desain tabel */
+.tabel {
   width: 100%;
   border-collapse: collapse;
+  font-size: 16px;
+  color: whitesmoke;
+  table-layout: fixed;
 }
 
-td {
-  border: 1px solid #555;
-  padding: 10px;
+.tabel td {
+  border: 2px solid whitesmoke;
+  padding: 6px;
+}
+
+/* judul */
+.judul {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* header */
+.tabel tr:first-child td {
+  position: sticky;
+  top: 0;
+  background: #222;
+  z-index: 2;
+}
+
+/* tabel kiri */
+.left-text {
+  text-align: left;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* tabel kanan */
+.center-text {
+  text-align: center;
+}
+
+/* warna */
+.tabel tr:nth-child(even):not(:first-child) {
+  background: #333;
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
-  <div class="frame">
-    <div class="container">
+<div class="canvas">
+  
+  <div class="left">
+    <div class="lamp"></div>
+    <p>Lampu</p>
+    <div class="buttonArea">
+      <div class="buttonArea1">
+        <div class="button1"></div>
+        <p>Start</p>
+      </div>
+      <div class="buttonArea2">
+        <div class="button2"></div>
+        <p>Stop</p>
+      </div>
+    </div>
+  </div>
 
-      <div class="left">
+  <div class="right">
+    <div class="panel">
 
-        <div class="lamp-area">
-          <div class="lamp" id="lamp"></div>
-          <div>Lampu</div>
-        </div>
+      <!-- input -->
+      <div class="table-wrapper">
+        <table class="tabel">
+          <tr>
+            <td colspan="2" class="judul">INPUT</td>
+          </tr>
 
-        <div class="button-group">
-          <button id="btnStart">START</button>
-          <button id="btnStop">STOP</button>
-        </div>
-
+          <tr><td class="left-text">Start</td><td id="startTabel" class="center-text">0</td></tr>
+          <tr><td class="left-text">Stop</td><td id="stopTabel" class="center-text">0</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+        </table>
       </div>
 
-      <div class="right">
-        <table>
+      <!-- output -->
+      <div class="table-wrapper">
+        <table class="tabel">
           <tr>
-            <td>label</td>
-            <td>nilai</td>
+            <td colspan="2" class="judul">OUTPUT</td>
           </tr>
-          <tr>
-            <td>0.00|Tombol Start</td>
-            <td id="valStart">0</td>
-          </tr>
-          <tr>
-            <td>0.01|Tombol Stop</td>
-            <td id="valStop">0</td>
-          </tr>
-          <tr>
-            <td>100.00|Lampu</td>
-            <td id="valLamp">0</td>
-          </tr>
+
+          <tr><td class="left-text">Lampu</td><td id="lampuTabel" class="center-text">0</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
+          <tr><td class="left-text">-</td><td class="center-text">-</td></tr>
         </table>
       </div>
 
     </div>
   </div>
+
 </div>
 
 <script>
-const btnStart = document.getElementById("btnStart");
-const btnStop = document.getElementById("btnStop");
+  const button1 = document.querySelector('.button1');
+  const button2 = document.querySelector('.button2');
+  const startTabel = document.getElementById('startTabel');
+  const stopTabel = document.getElementById('stopTabel');
+  const lamp = document.querySelector('.lamp');
+  const lampuTabel = document.getElementById('lampuTabel');
 
-const valStart = document.getElementById("valStart");
-const valStop = document.getElementById("valStop");
-const valLamp = document.getElementById("valLamp");
+  let memori = "0";
 
-const lamp = document.getElementById("lamp");
+  function updateValue() {
 
-/* STATE */
-let lampState = 0;
-let prevStart = 0;
+    // tombol style
+    if (startTabel.textContent.trim() === "1") {
+      button1.style.background = "limegreen";
+      button1.style.boxShadow = "0px 0px 10px limegreen";
+    } else {
+      button1.style.background = "#666";
+      button1.style.boxShadow = "0px 10px 10px #333";
+    }
 
-/* INPUT SET */
-function setStart(v) {
-  valStart.textContent = v;
-  btnStart.classList.toggle("active", v === 1);
-}
+    if (stopTabel.textContent.trim() === "1") {
+      button2.style.background = "limegreen";
+      button2.style.boxShadow = "0px 0px 10px limegreen";
+    } else {
+      button2.style.background = "#666";
+      button2.style.boxShadow = "0px 10px 10px #333";
+    }
 
-function setStop(v) {
-  valStop.textContent = v;
-  btnStop.classList.toggle("active", v === 1);
-}
+    // logika
 
-/* LOGIC */
-function logic() {
-  const start = parseInt(valStart.textContent);
-  const stop = parseInt(valStop.textContent);
+    if (startTabel.textContent.trim() === "1") {
+      memori = "1";
+    } else if (stopTabel.textContent.trim() === "1") {
+      memori = "0";
+    }
 
-  if (prevStart === 1 && start === 0 && stop === 1) {
-    lampState = 0;
+    // lampu
+    lampuTabel.textContent = memori;
+
+    if (memori === "1") {
+      lamp.style.background = "limegreen";
+      lamp.style.boxShadow = "0px 0px 10px limegreen";
+    } else {
+      lamp.style.background = "#666";
+      lamp.style.boxShadow = "0px 0px 10px #333";
+    }
   }
-  else if (start === 1) {
-    lampState = 1;
-  }
-  else if (stop === 1) {
-    lampState = 0;
-  }
 
-  prevStart = start;
+  // tombol konfig
 
-  valLamp.textContent = lampState;
-  lamp.classList.toggle("on", lampState === 1);
-}
+  // tekan
+  button1.addEventListener('pointerdown', () => {
+    startTabel.textContent = "1";
+    updateValue();
+  });
 
-/* EVENTS */
-btnStart.addEventListener("mousedown", () => {
-  setStart(1);
-  logic();
-});
+  button2.addEventListener('pointerdown', () => {
+    stopTabel.textContent = "1";
+    updateValue();
+  });
 
-btnStart.addEventListener("mouseup", () => {
-  setStart(0);
-  logic();
-});
+  // lepas
+  button1.addEventListener('pointerup', () => {
+    startTabel.textContent = "0";
+    updateValue();
+  });
 
-btnStop.addEventListener("mousedown", () => {
-  setStop(1);
-  logic();
-});
+  button2.addEventListener('pointerup', () => {
+    stopTabel.textContent = "0";
+    updateValue();
+  });
 
-btnStop.addEventListener("mouseup", () => {
-  setStop(0);
-  logic();
-});
+  // antisipasi lepas di luar tombol
+  document.addEventListener('pointerup', () => {
+    startTabel.textContent = "0";
+    stopTabel.textContent = "0";
+    updateValue();
+  });
 
-/* TOUCH */
-btnStart.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  setStart(1);
-  logic();
-});
-
-btnStart.addEventListener("touchend", () => {
-  setStart(0);
-  logic();
-});
-
-btnStop.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  setStop(1);
-  logic();
-});
-
-btnStop.addEventListener("touchend", () => {
-  setStop(0);
-  logic();
-});
-</script>
-
-<script>
-function scalePanel() {
-  const scale = Math.min(
-    window.innerWidth / 1280,
-    window.innerHeight / 720
-  );
-  document.body.style.transform = `scale(${scale})`;
-}
-
-window.addEventListener("resize", scalePanel);
-window.addEventListener("load", scalePanel);
+  // init awal
+  updateValue();
 </script>
 
 </body>
