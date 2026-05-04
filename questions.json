@@ -20,6 +20,6 @@
     "output": [
       { "address": "100.00", "label": "Lampu" }
     ],
-    "iframe":  "iframe": "./example/2.html"
+    "iframe":  "./example/2.html"
   }
 }
