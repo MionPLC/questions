@@ -241,12 +241,18 @@ html, body {
   const stopTabel = document.getElementById('stopTabel');
   const lamp = document.querySelector('.lamp');
   const lampuTabel = document.getElementById('lampuTabel');
-
+  
   let memori = "0";
-
+  
+  // tracking pointer
+  let activePointers = {
+    start: null,
+    stop: null
+  };
+  
   function updateValue() {
-
-    // tombol style
+  
+    // ===== VISUAL =====
     if (startTabel.textContent.trim() === "1") {
       button1.style.background = "limegreen";
       button1.style.boxShadow = "0px 0px 10px limegreen";
@@ -254,7 +260,7 @@ html, body {
       button1.style.background = "#666";
       button1.style.boxShadow = "0px 10px 10px #333";
     }
-
+  
     if (stopTabel.textContent.trim() === "1") {
       button2.style.background = "limegreen";
       button2.style.boxShadow = "0px 0px 10px limegreen";
@@ -262,18 +268,16 @@ html, body {
       button2.style.background = "#666";
       button2.style.boxShadow = "0px 10px 10px #333";
     }
-
-    // logika
-
-    if (startTabel.textContent.trim() === "1") {
-      memori = "1";
-    } else if (stopTabel.textContent.trim() === "1") {
+  
+    // ===== LOGIKA PLC =====
+    if (stopTabel.textContent.trim() === "1") {
       memori = "0";
+    } else if (startTabel.textContent.trim() === "1") {
+      memori = "1";
     }
-
-    // lampu
+  
     lampuTabel.textContent = memori;
-
+  
     if (memori === "1") {
       lamp.style.background = "limegreen";
       lamp.style.boxShadow = "0px 0px 10px limegreen";
@@ -282,23 +286,14 @@ html, body {
       lamp.style.boxShadow = "0px 0px 10px #333";
     }
   }
-
-  // tombol konfig
-
-  // tekan
+  
+  // ===== START BUTTON =====
   button1.addEventListener('pointerdown', (e) => {
     activePointers.start = e.pointerId;
     startTabel.textContent = "1";
     updateValue();
   });
   
-  button2.addEventListener('pointerdown', (e) => {
-    activePointers.stop = e.pointerId;
-    stopTabel.textContent = "1";
-    updateValue();
-  });
-
-  // lepas
   button1.addEventListener('pointerup', (e) => {
     if (e.pointerId === activePointers.start) {
       activePointers.start = null;
@@ -306,7 +301,14 @@ html, body {
       updateValue();
     }
   });
-
+  
+  // ===== STOP BUTTON =====
+  button2.addEventListener('pointerdown', (e) => {
+    activePointers.stop = e.pointerId;
+    stopTabel.textContent = "1";
+    updateValue();
+  });
+  
   button2.addEventListener('pointerup', (e) => {
     if (e.pointerId === activePointers.stop) {
       activePointers.stop = null;
@@ -314,10 +316,10 @@ html, body {
       updateValue();
     }
   });
-
-  // antisipasi lepas di luar tombol
+  
+  // ===== HANDLE LEPAS DI LUAR =====
   document.addEventListener('pointerup', (e) => {
-
+  
     // START
     if (e.pointerId === activePointers.start) {
       activePointers.start = null;
@@ -332,6 +334,8 @@ html, body {
   
     updateValue();
   });
+  
+  updateValue();
 </script>
 
 </body>
