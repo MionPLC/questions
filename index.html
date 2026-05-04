@@ -120,9 +120,9 @@ body {
 
 <div class="sidebar">
     <h3>Question- MionPLC</h3>
-    <a href="#overview">Ringkasan</a>
-    <a href="#addressing">Pengalamatan</a>
-    <a href="#simulasi">Simulasi</a>
+    <a href="#" data-target="overview">Ringkasan</a>
+    <a href="#" data-target="addressing">Pengalamatan</a>
+    <a href="#" data-target="simulasi">Simulasi</a>
 </div>
 
 <div class="content">
@@ -271,13 +271,21 @@ window.addEventListener("load", ()=>{
     scaleIframe();
 });
 
-// ===== SIDEBAR SMOOTH SCROLL =====
-document.querySelectorAll(".sidebar a").forEach(link=>{
-    link.addEventListener("click", e=>{
-        const target = document.querySelector(link.getAttribute("href"));
-        if(target){
-            e.preventDefault();
-            target.scrollIntoView({ behavior:"smooth" });
+// sidebar
+window.addEventListener("scroll", () => {
+    let current = "";
+
+    document.querySelectorAll("section").forEach(section => {
+        const top = section.offsetTop - 150;
+        if (window.scrollY >= top) {
+            current = section.id;
+        }
+    });
+
+    sidebarLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("data-target") === current) {
+            link.classList.add("active");
         }
     });
 });
