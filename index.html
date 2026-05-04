@@ -3,88 +3,187 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MionPLC</title>
+<title>Question - MionPLC</title>
+<link rel="icon" href="https://mionplc.github.io/assets/icon.webp">
 
 <style>
-body{
-    margin:0;
-    font-family:Arial;
-    display:flex;
-    background:#f5f7fa;
+* {
+    box-sizing: border-box;
 }
 
-/* sidebar */
-.sidebar{
-    width:250px;
-    background:#fff;
-    height:100vh;
-    padding:20px;
-    border-right:1px solid #ddd;
-    position:fixed;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    background: #f5f7fa;
+    color: #333;
 }
 
-.sidebar a{
-    display:block;
-    text-decoration:none;
-    color:#444;
-    margin:8px 0;
+/* ===== SIDEBAR ===== */
+.sidebar {
+    width: 250px;
+    background: #ffffff;
+    border-right: 1px solid #ddd;
+    height: 100vh;
+    position: fixed;
+    overflow-y: auto;
+    padding: 20px;
 }
 
-/* content */
-.content{
-    margin-left:270px;
-    padding:20px;
-    width:100%;
+.sidebar h3 {
+    margin-top: 0;
+    font-size: 16px;
 }
 
-/* nav */
-.nav-bottom{
-    display:flex;
-    justify-content:space-between;
-    margin-top:30px;
+.sidebar a {
+    display: block;
+    text-decoration: none;
+    color: #444;
+    padding: 6px 0;
+    font-size: 14px;
+    transition: 0.3s;
 }
 
-.nav-bottom a{
-    background:#334155;
-    color:#fff;
-    padding:10px 15px;
-    border-radius:10px;
-    text-decoration:none;
+.sidebar a:hover {
+    color: #1a73e8;
 }
 
-.nav-bottom a.disabled{
-    background:#94a3b8;
-    pointer-events:none;
+.sidebar a.active {
+    color: #1a73e8;
+    font-weight: bold;
 }
 
-/* tag */
-.tag-group{
-    display:flex;
-    gap:6px;
-    flex-wrap:wrap;
+/* ===== CONTENT ===== */
+.content {
+    margin-left: 270px;
+    padding: 40px;
+    width: 100%;
 }
 
-.tag-group code{
-    background:#eee;
-    padding:4px 8px;
+.breadcrumb {
+    font-size: 13px;
+    margin-bottom: 15px;
+    color: #888;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+section {
+    margin-bottom: 10px;
+}
+
+pre {
+    background: #1e1e1e;
+    color: #fff;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+}
+
+.nav-bottom {
+    width: 100%;
+    background: transparent;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-bottom a {
+    text-decoration: none;
+    color: white;
+    background: #334155;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.nav-bottom a:hover {
+    background: #475569;
+    transform: scale(1.05);
+}
+
+.home-btn {
+    background: #0ea5e9;
+    font-weight: bold;
+}
+
+.home-btn:hover {
+    background: #0284c7;
+}
+
+/* ===== DISABLED BUTTON ===== */
+.nav-bottom a.disabled {
+    background: #94a3b8;
+    pointer-events: none;
+    transform: none;
+    cursor: not-allowed;
+}
+
+/* ===== addressing ===== */
+#addressing {
+    max-width: 900px;
+    line-height: 1.9;
+}
+
+#addressing code {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 7px;
+    margin: 2px 4px 2px 0;
+    border-radius: 8px;
+    background: #eee;
+    color: #888;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.tag-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
 }
 
 /* iframe */
-.iframe-container{
-    width:100%;
-    max-width:1280px;
-    aspect-ratio:16/9;
-    position:relative;
+.iframe-container {
+  width: 100%;
+  max-width: 1280px;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
 }
 
-iframe{
-    position:absolute;
-    top:50%;
-    left:50%;
-    width:1280px;
-    height:720px;
-    transform:translate(-50%,-50%) scale(0.7);
-    border:none;
+.iframe-container iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1280px;
+  height: 720px;
+  border: none;
+  transform: translate(-50%, -50%) scale(0.7);
+  transform-origin: center;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 900px) {
+    .sidebar {
+        display: none;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    #addressing code {
+        font-size: 12px;
+        padding: 5px 8px;
+    }
 }
 </style>
 </head>
@@ -92,122 +191,186 @@ iframe{
 <body>
 
 <div class="sidebar">
-    <h3>Question</h3>
+    <h3>Question - MionPLC</h3>
     <a href="#overview">Ringkasan</a>
     <a href="#addressing">Pengalamatan</a>
     <a href="#simulasi">Simulasi</a>
 </div>
 
 <div class="content">
+    <div class="breadcrumb">
+        <a href="https://mionplc.github.io/" style="color: #888;">MionPLC</a> / Questions
+    </div>
 
-<h1 id="title">Loading...</h1>
+    <h1 id="title">Loading...</h1>
 
-<section id="overview">
-<p id="overview-text"></p>
-</section>
+    <section id="overview">
+        <p id="overview-text"></p>
+    </section>
 
-<section id="addressing">
-<h2>Pengalamatan</h2>
+    <section id="addressing">
+        <h2>Pengalamatan</h2>
 
-<p>Input</p>
-<div id="input-list" class="tag-group"></div>
+        <p>Input</p>
+        <div class="tag-group" id="input-list"></div>
 
-<p>Output</p>
-<div id="output-list" class="tag-group"></div>
-</section>
+        <p>Output</p>
+        <div class="tag-group" id="output-list"></div>
+    </section>
 
-<section id="simulasi">
-<h2>Simulasi</h2>
-<div class="iframe-container">
-<iframe id="sim-frame"></iframe>
-</div>
-</section>
+    <section id="simulasi">
+        <h2>Simulasi</h2>
+        <div class="iframe-container">
+            <iframe id="sim-frame"></iframe>
+        </div>
+    </section>
 
-<div class="nav-bottom">
-<a id="prev-btn">←</a>
-<a href="/" style="background:#0ea5e9">Home</a>
-<a id="next-btn">→</a>
-</div>
-
+    <section id="navigation">
+        <div class="nav-bottom">
+            <a href="#" id="prev-btn">←</a>
+            <a href="https://mionplc.github.io" class="home-btn">Home</a>
+            <a href="#" id="next-btn">→</a>
+        </div>
+    </section>
 </div>
 
 <script>
+// ===== iframe scaling (TETAP) =====
+function scaleIframe() {
+  const iframe = document.querySelector(".iframe-container iframe");
+  const container = document.querySelector(".iframe-container");
+
+  if (!iframe || !container) return;
+
+  const scaleX = container.clientWidth / 1280;
+  const scaleY = container.clientHeight / 720;
+  const scale = Math.min(scaleX, scaleY);
+
+  iframe.style.transform = `translate(-50%, -50%) scale(${scale})`;
+}
+
+window.addEventListener("load", scaleIframe);
+window.addEventListener("resize", scaleIframe);
+
+// ===== SIDEBAR (TETAP) =====
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".sidebar a");
+
+window.addEventListener("scroll", () => {
+    let current = "";
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 150;
+        if (window.scrollY >= sectionTop) {
+            current = section.id;
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === "#" + current) {
+            link.classList.add("active");
+        }
+    });
+});
+
+navLinks.forEach(link => {
+    link.addEventListener("click", function(e) {
+        const target = document.querySelector(this.getAttribute("href"));
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth" });
+        }
+    });
+});
+
+// ===== ROUTING (?q=) =====
 let allQuestions = {};
 let keys = [];
 let currentIndex = 0;
 
-// ambil ?q=
-function getQuestionId(){
-    const params = new URLSearchParams(location.search);
+function getQuestionId() {
+    const params = new URLSearchParams(window.location.search);
     return params.get("q") || "question1";
 }
 
-// render
-function render(id){
+function renderQuestion(id) {
     const data = allQuestions[id];
-    if(!data) return;
+    if (!data) return;
 
     currentIndex = keys.indexOf(id);
 
-    title.innerText = data.title;
-    overview-text.innerText = data.overview;
+    document.getElementById("title").innerText = data.title;
+    document.getElementById("overview-text").innerText = data.overview;
 
-    input-list.innerHTML = "";
-    data.input.forEach(i=>{
-        input-list.innerHTML += `<code>${i.address} | ${i.label}</code>`;
+    const inputList = document.getElementById("input-list");
+    inputList.innerHTML = "";
+    data.input.forEach(i => {
+        inputList.innerHTML += `<code>${i.address} | ${i.label}</code>`;
     });
 
-    output-list.innerHTML = "";
-    data.output.forEach(o=>{
-        output-list.innerHTML += `<code>${o.address} | ${o.label}</code>`;
+    const outputList = document.getElementById("output-list");
+    outputList.innerHTML = "";
+    data.output.forEach(o => {
+        outputList.innerHTML += `<code>${o.address} | ${o.label}</code>`;
     });
 
-    sim-frame.src = data.iframe;
+    document.getElementById("sim-frame").src = data.iframe;
 
     updateNav();
 
-    // scroll ke atas
-    window.scrollTo({top:0,behavior:"smooth"});
+    window.scrollTo({ top: 0 });
 
-    // scroll ke section jika ada hash
-    if(location.hash){
+    // handle #section setelah reload
+    if (location.hash) {
         const el = document.querySelector(location.hash);
-        if(el){
-            setTimeout(()=>{
-                el.scrollIntoView({behavior:"smooth"});
-            },100);
+        if (el) {
+            setTimeout(() => {
+                el.scrollIntoView({ behavior: "smooth" });
+            }, 100);
         }
     }
 }
 
-// navigation
-function updateNav(){
-    prev-btn.classList.toggle("disabled", currentIndex===0);
-    next-btn.classList.toggle("disabled", currentIndex===keys.length-1);
+function updateNav() {
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+
+    prevBtn.classList.toggle("disabled", currentIndex === 0);
+    nextBtn.classList.toggle("disabled", currentIndex === keys.length - 1);
 }
 
-prev-btn.onclick = ()=>{
-    if(currentIndex>0){
-        location.search = "?q="+keys[currentIndex-1];
+document.getElementById("prev-btn").addEventListener("click", function(e) {
+    e.preventDefault();
+    if (currentIndex > 0) {
+        location.search = "?q=" + keys[currentIndex - 1];
     }
-};
+});
 
-next-btn.onclick = ()=>{
-    if(currentIndex<keys.length-1){
-        location.search = "?q="+keys[currentIndex+1];
+document.getElementById("next-btn").addEventListener("click", function(e) {
+    e.preventDefault();
+    if (currentIndex < keys.length - 1) {
+        location.search = "?q=" + keys[currentIndex + 1];
     }
-};
+});
 
-// init
-async function init(){
+async function initRouting() {
     const res = await fetch("questions.json");
     allQuestions = await res.json();
     keys = Object.keys(allQuestions);
 
-    render(getQuestionId());
+    renderQuestion(getQuestionId());
 }
 
-window.onload = init;
+window.addEventListener("load", initRouting);
+
+// image zoom (TETAP)
+const img = document.querySelector(".a4-container img");
+if (img) {
+    img.addEventListener("click", function() {
+        window.open(this.src, "_blank");
+    });
+}
 </script>
 
 </body>
