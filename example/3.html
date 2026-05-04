@@ -286,36 +286,52 @@ html, body {
   // tombol konfig
 
   // tekan
-  button1.addEventListener('pointerdown', () => {
+  button1.addEventListener('pointerdown', (e) => {
+    activePointers.start = e.pointerId;
     startTabel.textContent = "1";
     updateValue();
   });
-
-  button2.addEventListener('pointerdown', () => {
+  
+  button2.addEventListener('pointerdown', (e) => {
+    activePointers.stop = e.pointerId;
     stopTabel.textContent = "1";
     updateValue();
   });
 
   // lepas
-  button1.addEventListener('pointerup', () => {
-    startTabel.textContent = "0";
-    updateValue();
+  button1.addEventListener('pointerup', (e) => {
+    if (e.pointerId === activePointers.start) {
+      activePointers.start = null;
+      startTabel.textContent = "0";
+      updateValue();
+    }
   });
 
-  button2.addEventListener('pointerup', () => {
-    stopTabel.textContent = "0";
-    updateValue();
+  button2.addEventListener('pointerup', (e) => {
+    if (e.pointerId === activePointers.stop) {
+      activePointers.stop = null;
+      stopTabel.textContent = "0";
+      updateValue();
+    }
   });
 
   // antisipasi lepas di luar tombol
-  document.addEventListener('pointerup', () => {
-    startTabel.textContent = "0";
-    stopTabel.textContent = "0";
+  document.addEventListener('pointerup', (e) => {
+
+    // START
+    if (e.pointerId === activePointers.start) {
+      activePointers.start = null;
+      startTabel.textContent = "0";
+    }
+  
+    // STOP
+    if (e.pointerId === activePointers.stop) {
+      activePointers.stop = null;
+      stopTabel.textContent = "0";
+    }
+  
     updateValue();
   });
-
-  // init awal
-  updateValue();
 </script>
 
 </body>
