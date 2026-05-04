@@ -25,7 +25,8 @@
     "title": "Question - 3",
     "overview": "Sebuah lampu dapat dikendalikan dengan 2 tombol, tombol start ditekan maka lampu dapat menyala dan jika tombol stop ditekan lampu mati dan jika kedua tombol ditekan maka lampu tetap akan menyala.",
     "input": [
-      { "address": "0.00", "label": "Tombol Start" }{ "address": "0.01", "label": "Tombol Stop" }
+      { "address": "0.00", "label": "Tombol Start" },
+      { "address": "0.01", "label": "Tombol Stop" }
     ],
     "output": [
       { "address": "100.00", "label": "Lampu" }
