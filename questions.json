@@ -1,0 +1,25 @@
+{
+  "question1": {
+    "title": "Question - 1",
+    "overview": "Lampu dikontrol 1 tombol (toggle).",
+    "input": [
+      { "address": "0.00", "label": "Tombol" }
+    ],
+    "output": [
+      { "address": "100.00", "label": "Lampu" }
+    ],
+    "iframe":  "./example/1.html"
+  },
+  "question2": {
+    "title": "Question - 2",
+    "overview": "Lampu dengan tombol start & stop.",
+    "input": [
+      { "address": "0.00", "label": "Start" },
+      { "address": "0.01", "label": "Stop" }
+    ],
+    "output": [
+      { "address": "100.00", "label": "Lampu" }
+    ],
+    "iframe":  "iframe": "./example/2.html"
+  }
+}
