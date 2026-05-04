@@ -1,25 +1,35 @@
 {
   "question1": {
     "title": "Question - 1",
-    "overview": "Lampu dikontrol 1 tombol (toggle).",
+    "overview": "Sebuah lampu dapat dijalankan menggunakan 1 tombol, jika tombol ditekan maka lampu aktif sebaliknya lampu mati.",
     "input": [
       { "address": "0.00", "label": "Tombol" }
     ],
     "output": [
       { "address": "100.00", "label": "Lampu" }
     ],
-    "iframe":  "./example/1.html"
+    "iframe": "./example/1.html"
   },
   "question2": {
     "title": "Question - 2",
-    "overview": "Lampu dengan tombol start & stop.",
+    "overview": "Sebuah lampu dapat dimatikan menggunakan 1 tombol, jika tombol ditekan maka lampu mati sebaliknya lampu hidup. Pada kondisi awal lampu menyala.",
     "input": [
-      { "address": "0.00", "label": "Start" },
-      { "address": "0.01", "label": "Stop" }
+      { "address": "0.00", "label": "Tombol" }
     ],
     "output": [
       { "address": "100.00", "label": "Lampu" }
     ],
-    "iframe":  "./example/2.html"
-  }
+    "iframe": "./example/2.html"
+  },
+  "question3": {
+    "title": "Question - 3",
+    "overview": "Sebuah lampu dapat dikendalikan dengan 2 tombol, tombol start ditekan maka lampu dapat menyala dan jika tombol stop ditekan lampu mati dan jika kedua tombol ditekan maka lampu tetap akan menyala.",
+    "input": [
+      { "address": "0.00", "label": "Tombol Start" }{ "address": "0.01", "label": "Tombol Stop" }
+    ],
+    "output": [
+      { "address": "100.00", "label": "Lampu" }
+    ],
+    "iframe": "./example/3.html"
+  },
 }
